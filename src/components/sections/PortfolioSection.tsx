@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 
-// Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
+// Refined animation variants
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 }
 }
 
@@ -11,151 +11,149 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15
+      staggerChildren: 0.2
     }
   }
 }
 
 const PortfolioSection = () => {
+  const projects = [
+    {
+      id: 1,
+      title: "Fleurilège",
+      category: "E-commerce Fleuriste",
+      technology: "Shopify · React",
+      result: "Boutique modernisée",
+      description: "Site e-commerce complet pour fleuriste avec catalogue produits et système de commande",
+      image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&h=400&fit=crop&crop=center"
+    },
+    {
+      id: 2,
+      title: "Eko's Coaching",
+      category: "Site Vitrine Premium",
+      technology: "React · Calendly API",
+      result: "Réservations optimisées",
+      description: "Site vitrine professionnel avec intégration calendrier pour coach sportif",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&crop=center"
+    },
+    {
+      id: 3,
+      title: "Shobu",
+      category: "Plateforme SaaS Esport",
+      technology: "Next.js · MongoDB",
+      result: "Communauté active",
+      description: "Plateforme SaaS complète dédiée à l'organisation de tournois esport",
+      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop&crop=center"
+    }
+  ]
+
   return (
     <motion.section 
-      className="py-20" 
+      className="py-32 bg-gray-800" 
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       variants={staggerContainer}
     >
-      <div className="max-w-6xl mx-auto px-4">
-        <motion.div className="text-center mb-16" variants={fadeInUp}>
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <motion.div className="text-center mb-24" variants={fadeIn}>
           <motion.div 
-            className="inline-block px-4 py-2 bg-orange-900/20 rounded-full text-orange-400 font-semibold mb-4 border border-orange-600/30"
+            className="inline-block px-6 py-2 bg-gray-700/50 backdrop-blur-sm rounded-full text-gray-300 font-light mb-8 border border-gray-600/30"
             whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.3 }}
           >
             Nos réalisations
           </motion.div>
+          
           <motion.h2 
-            className="text-4xl md:text-5xl font-bold mb-6"
-            variants={fadeInUp}
-            style={{ 
-              background: 'var(--gradient-text)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}
+            className="text-5xl md:text-6xl font-light mb-6 text-white leading-tight"
+            variants={fadeIn}
           >
             Portfolio
+            <span className="block font-extralight bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+              d'Excellence
+            </span>
           </motion.h2>
+          
           <motion.p 
-            className="text-lg text-gray-300 max-w-3xl mx-auto"
-            variants={fadeInUp}
+            className="text-xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed"
+            variants={fadeIn}
           >
-            Découvrez quelques-unes de nos créations qui ont marqué nos clients et <span className="text-orange-400 font-semibold">généré des résultats concrets</span>
+            Découvrez quelques créations qui ont marqué nos clients et généré des résultats exceptionnels
           </motion.p>
         </motion.div>
 
+        {/* Portfolio grid */}
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={staggerContainer}
         >
-          {/* Project 1 */}
-          <motion.div 
-            className="group rounded-2xl overflow-hidden bg-gray-900/50 border border-orange-900/20 hover:border-orange-600/40 transition-all duration-300"
-            variants={fadeInUp}
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.3 }}
-          >
+          {projects.map((project, index) => (
             <motion.div 
-              className="aspect-video relative overflow-hidden"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4 }}
+              key={project.id}
+              className="group bg-gray-900/80 backdrop-blur-sm shadow-lg border border-gray-700/50 overflow-hidden hover:shadow-2xl hover:shadow-orange-500/10 hover:border-orange-500/30 transition-all duration-500"
+              variants={fadeIn}
+              transition={{ delay: index * 0.2 }}
+              whileHover={{ y: -8 }}
             >
-              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop&crop=center" 
-                   alt="Dashboard Business" 
-                   className="w-full h-full object-cover transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+              {/* Image */}
+              <motion.div 
+                className="aspect-[4/3] relative overflow-hidden"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.6 }}
+              >
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  className="w-full h-full object-cover transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Technology badge */}
+                <div className="absolute top-4 left-4 bg-gray-900/80 backdrop-blur-sm text-gray-300 px-3 py-1 text-xs font-light border border-gray-700/50">
+                  {project.technology}
+                </div>
+              </motion.div>
               
-              <div className="absolute top-3 right-3 bg-orange-600 text-white px-2 py-1 rounded text-xs font-semibold">
-                React + Firebase
-              </div>
-              
-              <div className="absolute bottom-3 left-3 right-3">
-                <h3 className="text-lg font-semibold text-white mb-1">TechCorp Solutions</h3>
-                <p className="text-orange-300 text-sm font-medium mb-1">+300% de croissance</p>
-                <p className="text-gray-300 text-sm">Plateforme SaaS avec dashboard en temps réel</p>
+              {/* Content */}
+              <div className="p-8">
+                <div className="mb-4">
+                  <h3 className="text-xl font-medium text-white mb-2">{project.title}</h3>
+                  <p className="text-gray-400 font-light text-sm">{project.category}</p>
+                </div>
+                
+                <p className="text-gray-300 font-light mb-4 leading-relaxed">
+                  {project.description}
+                </p>
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-orange-400 font-medium text-sm">
+                    {project.result}
+                  </span>
+                  <motion.button 
+                    className="text-gray-400 hover:text-white transition-colors duration-300"
+                    whileHover={{ x: 3 }}
+                  >
+                    <span className="text-sm">→</span>
+                  </motion.button>
+                </div>
               </div>
             </motion.div>
-          </motion.div>
-
-          {/* Project 2 */}
-          <motion.div 
-            className="group rounded-2xl overflow-hidden bg-gray-900/50 border border-orange-900/20 hover:border-orange-600/40 transition-all duration-300"
-            variants={fadeInUp}
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.3 }}
-          >
-            <motion.div 
-              className="aspect-video relative overflow-hidden"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4 }}
-            >
-              <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop&crop=center" 
-                   alt="E-commerce Mode" 
-                   className="w-full h-full object-cover transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-              
-              <div className="absolute top-3 right-3 bg-orange-600 text-white px-2 py-1 rounded text-xs font-semibold">
-                Next.js + Stripe
-              </div>
-              
-              <div className="absolute bottom-3 left-3 right-3">
-                <h3 className="text-lg font-semibold text-white mb-1">FashionLux</h3>
-                <p className="text-orange-300 text-sm font-medium mb-1">CA multiplié par 5</p>
-                <p className="text-gray-300 text-sm">E-commerce premium avec personnalisation IA</p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Project 3 */}
-          <motion.div 
-            className="group rounded-2xl overflow-hidden bg-gray-900/50 border border-orange-900/20 hover:border-orange-600/40 transition-all duration-300"
-            variants={fadeInUp}
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.3 }}
-          >
-            <motion.div 
-              className="aspect-video relative overflow-hidden"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4 }}
-            >
-              <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=300&fit=crop&crop=center" 
-                   alt="App Mobile" 
-                   className="w-full h-full object-cover transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-              
-              <div className="absolute top-3 right-3 bg-orange-600 text-white px-2 py-1 rounded text-xs font-semibold">
-                React Native
-              </div>
-              
-              <div className="absolute bottom-3 left-3 right-3">
-                <h3 className="text-lg font-semibold text-white mb-1">FinTech Pro</h3>
-                <p className="text-orange-300 text-sm font-medium mb-1">10K utilisateurs</p>
-                <p className="text-gray-300 text-sm">Application fintech avec intégration crypto</p>
-              </div>
-            </motion.div>
-          </motion.div>
+          ))}
         </motion.div>
 
+        {/* CTA */}
         <motion.div 
-          className="text-center mt-12"
-          variants={fadeInUp}
+          className="text-center mt-20"
+          variants={fadeIn}
         >
           <motion.button 
-            className="px-8 py-3 border border-orange-600/50 text-orange-400 hover:bg-orange-900/20 hover:text-orange-300 rounded-xl font-semibold transition-all duration-300"
-            whileHover={{ y: -2 }}
+            className="px-8 py-4 border border-gray-600 text-gray-300 hover:bg-gray-700/50 hover:border-gray-500 font-light tracking-wide transition-all duration-300"
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            Voir tous nos projets →
+            Voir tous nos projets
           </motion.button>
         </motion.div>
       </div>
